@@ -20,7 +20,14 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ubuntu/DGitAction || git clone https://github.com/SanjeevCod3r/DGitAction.git DGitAction && cd DGitAction
+            cd /home/ubuntu
+
+            if [ ! -d "DGitAction" ]; then
+              git clone https://github.com/SanjeevCod3r/DGitAction.git
+            fi
+
+            cd DGitAction
             git pull origin main
-            sudo docker-compose down
-            sudo docker-compose up -d --build
+
+            sudo docker compose down
+            sudo docker compose up -d --build
